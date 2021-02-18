@@ -11,6 +11,7 @@ import {
   FlatList,
   TextStyle,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import {
   ActionSheetProvider,
@@ -881,7 +882,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
 
   render() {
     if (this.state.isInitialized === true) {
-      const { wrapInSafeArea } = this.props
+      const { wrapInSafeArea, onBackDropPress } = this.props
       const Wrapper = wrapInSafeArea ? SafeAreaView : View
 
       return (
@@ -889,10 +890,12 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
           <ActionSheetProvider
             ref={(component: any) => (this._actionSheetRef = component)}
           >
-            <View style={styles.container} onLayout={this.onMainViewLayout}>
-              {this.renderMessages()}
-              {this.renderInputToolbar()}
-            </View>
+            <TouchableWithoutFeedback onPress={onBackDropPress}>
+              <View style={styles.container} onLayout={this.onMainViewLayout}>
+                {this.renderMessages()}
+                {this.renderInputToolbar()}
+              </View>
+            </TouchableWithoutFeedback>
           </ActionSheetProvider>
         </Wrapper>
       )
